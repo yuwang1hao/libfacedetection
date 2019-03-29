@@ -74,6 +74,7 @@ typedef struct SConvInfo_{
 	//float scale;
 }SConvInfo;
 
+///each layer is considered as a Filters
 Filters param_pFilters[NUM_CONV_LAYER]; //NUM_CONV_LAYER conv layers
 
 int param_pMean[3] = { 104,117,123 };
@@ -82,6 +83,7 @@ float param_pConv4Norm[64] = { 5.24936056137085f, 5.249833106994629f, 5.20149421
 float param_pConv5Norm[128] = { 3.2798357009887695f, 3.279853582382202f, 3.316532850265503f, 3.2797908782958984f, 3.283681631088257f, 3.292001962661743f, 3.2796599864959717f, 3.301004409790039f, 3.279745101928711f, 3.2916154861450195f, 3.304828405380249f, 3.2860844135284424f, 3.2962393760681152f, 3.2914977073669434f, 3.311239719390869f, 3.2796378135681152f, 3.30684757232666f, 3.2795956134796143f, 3.3049705028533936f, 3.2912471294403076f, 3.2799410820007324f, 3.280548095703125f, 3.279585838317871f, 3.3002915382385254f, 3.351128339767456f, 3.285721778869629f, 3.308690071105957f, 3.286360025405884f, 3.286612033843994f, 3.323331117630005f, 3.280801296234131f, 3.279557228088379f, 3.325319290161133f, 3.292274236679077f, 3.284330129623413f, 3.3016438484191895f, 3.305274248123169f, 3.293483257293701f, 3.2965309619903564f, 3.343932628631592f, 3.2799618244171143f, 3.281886100769043f, 3.2855217456817627f, 3.283858299255371f, 3.299082040786743f, 3.295645236968994f, 3.291444778442383f, 3.279492139816284f, 3.2956502437591553f, 3.3284802436828613f, 3.2878544330596924f, 3.291749954223633f, 3.3015894889831543f, 3.2998600006103516f, 3.2887396812438965f, 3.2832252979278564f, 3.285311698913574f, 3.30757474899292f, 3.284590721130371f, 3.3025388717651367f, 3.2936882972717285f, 3.279754877090454f, 3.307007312774658f, 3.2958528995513916f, 3.3630170822143555f, 3.326841354370117f, 3.2800698280334473f, 3.2920491695404053f, 3.2991254329681396f, 3.309135913848877f, 3.2799878120422363f, 3.2878851890563965f, 3.302861452102661f, 3.315964698791504f, 3.279761791229248f, 3.3086979389190674f, 3.2836644649505615f, 3.29606294631958f, 3.2939038276672363f, 3.296156883239746f, 3.300607204437256f, 3.3293192386627197f, 3.2886781692504883f, 3.292102098464966f, 3.279629945755005f, 3.2798566818237305f, 3.2876806259155273f, 3.281590223312378f, 3.281094789505005f, 3.2978975772857666f, 3.2799761295318604f, 3.3351552486419678f, 3.2866907119750977f, 3.338275671005249f, 3.2797188758850098f, 3.280174493789673f, 3.296318531036377f, 3.281552314758301f, 3.2805323600769043f, 3.294194459915161f, 3.279611349105835f, 3.3100433349609375f, 3.2793779373168945f, 3.2797317504882812f, 3.2823593616485596f, 3.2944772243499756f, 3.280740976333618f, 3.2863688468933105f, 3.299750804901123f, 3.282517194747925f, 3.2863147258758545f, 3.286238193511963f, 3.280881881713867f, 3.2873098850250244f, 3.2873218059539795f, 3.2804245948791504f, 3.306823968887329f, 3.312803030014038f, 3.2798690795898438f, 3.288886785507202f, 3.3185698986053467f, 3.299873113632202f, 3.279698610305786f, 3.3057520389556885f, 3.3125710487365723f, 3.2796096801757812f, 3.2905843257904053f, 3.2902579307556152f };
 float param_pConv6Norm[128] = { 3.2981998920440674f, 3.2801780700683594f, 3.2922229766845703f, 3.2955803871154785f, 3.294820547103882f, 3.292754888534546f, 3.2865407466888428f, 3.286324977874756f, 3.2815260887145996f, 3.2840657234191895f, 3.282493829727173f, 3.333282470703125f, 3.289398193359375f, 3.2884361743927f, 3.2864975929260254f, 3.2839083671569824f, 3.2875373363494873f, 3.322467565536499f, 3.28637433052063f, 3.286494731903076f, 3.291119337081909f, 3.322329044342041f, 3.2931485176086426f, 3.279733896255493f, 3.2803969383239746f, 3.295511245727539f, 3.2980639934539795f, 3.280717134475708f, 3.2957653999328613f, 3.317964553833008f, 3.2798070907592773f, 3.3057520389556885f, 3.305992841720581f, 3.348924160003662f, 3.291982650756836f, 3.3030447959899902f, 3.288562774658203f, 3.2987096309661865f, 3.2800376415252686f, 3.336385488510132f, 3.2968106269836426f, 3.296558380126953f, 3.2796730995178223f, 3.286644458770752f, 3.2797164916992188f, 3.2899343967437744f, 3.3156163692474365f, 3.3474082946777344f, 3.291513442993164f, 3.3053133487701416f, 3.283517360687256f, 3.305210828781128f, 3.303983211517334f, 3.282759189605713f, 3.280306816101074f, 3.2799665927886963f, 3.285292387008667f, 3.3079776763916016f, 3.29679274559021f, 3.280120849609375f, 3.2796525955200195f, 3.28070068359375f, 3.2877960205078125f, 3.302424192428589f, 3.2920310497283936f, 3.286226511001587f, 3.2799699306488037f, 3.2863574028015137f, 3.324301242828369f, 3.291632890701294f, 3.294870376586914f, 3.289574146270752f, 3.297481060028076f, 3.304020881652832f, 3.2841410636901855f, 3.2966504096984863f, 3.280271530151367f, 3.2840888500213623f, 3.3100359439849854f, 3.282552719116211f, 3.2812161445617676f, 3.3106632232666016f, 3.2951345443725586f, 3.280796766281128f, 3.283688545227051f, 3.328918695449829f, 3.2930126190185547f, 3.291832685470581f, 3.2913215160369873f, 3.282050609588623f, 3.280987501144409f, 3.303039073944092f, 3.2960453033447266f, 3.2923476696014404f, 3.2912893295288086f, 3.283773422241211f, 3.308786392211914f, 3.294309377670288f, 3.2953407764434814f, 3.2821991443634033f, 3.2892892360687256f, 3.2869884967803955f, 3.3056561946868896f, 3.281874895095825f, 3.337285280227661f, 3.2868685722351074f, 3.2931010723114014f, 3.279754638671875f, 3.2797317504882812f, 3.3095757961273193f, 3.2800772190093994f, 3.299697160720825f, 3.2798924446105957f, 3.2848010063171387f, 3.2815306186676025f, 3.29996919631958f, 3.29498553276062f, 3.317089557647705f, 3.2876529693603516f, 3.2813613414764404f, 3.290708065032959f, 3.2828986644744873f, 3.2800583839416504f, 3.3065834045410156f, 3.287909746170044f, 3.2797391414642334f, 3.3226301670074463f, 3.323007345199585f };
 
+///int pad; int stride; int width; int height; int channels; int num;
 SConvInfo param_pConvInfo[NUM_CONV_LAYER] = {
     //conv1_1
     { 1, 2, 3, 3, 3,  16 },
@@ -142,9 +144,11 @@ void init_parameters()
         int i = 0;
         param_pFilters[i].stride = 1;// param_pConvInfo[i].stride;
         param_pFilters[i].pad = 0;// param_pConvInfo[i].pad;
-        param_pFilters[i].scale = param_pConvCoefScales[i];
+        param_pFilters[i].scale = param_pConvCoefScales[i]; ///24 and each one is 1
+        ///each core = 3x3, multiplied by the channels 3
         int offset = param_pConvInfo[i].width * param_pConvInfo[i].height * param_pConvInfo[i].channels;
-        
+
+        ///param_pConvInfo.num is the node num in this layer 
         for(int ff = 0; ff < param_pConvInfo[i].num; ff++)
         {
             CDataBlob * b3x3 = new CDataBlob(param_pConvInfo[i].width, param_pConvInfo[i].height, param_pConvInfo[i].channels);
@@ -160,6 +164,7 @@ void init_parameters()
 #endif
             delete b3x3;
             b3x3 = 0;
+            ///get b1xb1 and push to the Filters 0
             param_pFilters[i].filters.push_back(b1x1);            
         }
     }
@@ -186,9 +191,11 @@ void init_parameters()
     }
 }
 
+///the return value is {pos and score}
 vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int height, int step)
 {
     CDataBlob inputImage;
+    ///24 LAYERS
     CDataBlob pConvDataBlobs[NUM_CONV_LAYER];
     CDataBlob pool1, pool2, pool3, pool4, pool5;
     CDataBlob conv3norm, conv4norm, conv5norm, conv6norm;
@@ -211,6 +218,7 @@ vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int h
   
     total = 0.0;
   
+    ///maybe do nothing
     TIME_START;
     //inputImage.setDataFromImage(rgbImageData, width, height, 3, step, param_pMean);
     inputImage.setDataFrom3x3S2P1to1x1S1P0FromImage(rgbImageData, width, height, 3, step, param_pMean);
@@ -218,16 +226,22 @@ vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int h
 
 
 /***************CONV1*********************/
+    ///now inputImage's data is like (width/2)*(width/2)*(32 units); the first 27 units are actually used; each unit has rgb three floats or int8s
+    ///param_pFilters's params is like (3x3x3) and thus when exe convolution it gets (width/2)*(width/2)
+    ///if there are 16 filters, it finally gets (width/2)*(width/2)*16
     int convidx = 0;
     TIME_START;
+    ///320x240 c=27; 1x1, c=27, 16filters; finally gets 320x240 x16
     convolution(&inputImage, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("conv11");
     TIME_START;
+    ///max{val, 0}
     relu(pConvDataBlobs+convidx);
     TIME_END("relu11");
 
     convidx++;
     TIME_START;
+    ///320x240 c=16; 1x1, c=16, 16filters; finally gets 320x240 x16
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("conv12");
     TIME_START;
@@ -235,12 +249,14 @@ vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int h
     TIME_END("relu12");
 
     TIME_START;
+    ///finally gets 160x120 x16
     maxpooling2x2S2(pConvDataBlobs+convidx, &pool1);
     TIME_END("pool1");
 
 /***************CONV2*********************/
     convidx++;
 TIME_START;
+///160x120 c=16; 3x3, c=16, 16filters; finally gets 160x120 x16
     convolution(&pool1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv21");
 TIME_START;
@@ -249,6 +265,7 @@ TIME_END("relu21");
 
 convidx++;
 TIME_START;
+///160x120 c=16; 1x1, c=16, 16filters; finally gets 160x120 x16
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv22");
 TIME_START
@@ -256,12 +273,14 @@ TIME_START
 TIME_END("relu22");
 
 TIME_START;
+///finally gets 80x60 x16
     maxpooling2x2S2(pConvDataBlobs+convidx, &pool2);
 TIME_END("pool2");
 
 /***************CONV3*********************/
     convidx++;
 TIME_START;
+///80x60 c=16; 3x3, c=16, 32filters; finally gets 80x60 x32
     convolution(&pool2, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv31");
 TIME_START;
@@ -270,6 +289,7 @@ TIME_END("relu31");
 
 convidx++;
 TIME_START;
+///80x60 c=32; 1x1, c=32, 32filters; finally gets 80x60 x32
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv32");
 TIME_START;
@@ -278,6 +298,7 @@ TIME_END("relu32");
 
 convidx++;
 TIME_START;
+///80x60 c=32; 3x3, c=32, 32filters; finally gets 80x60 x32
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv33");
 TIME_START;
@@ -285,12 +306,14 @@ TIME_START;
 TIME_END("relu33");
 
 TIME_START;
+///finally gets 40x30 x32
     maxpooling2x2S2(pConvDataBlobs+convidx, &pool3);
 TIME_END("pool3");
 
 /***************CONV4*********************/
     convidx++;
 TIME_START;
+///40x30 c=32; 3x3, c=32, 64filters; finally gets 40x30 x64
     convolution(&pool3, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv41");
 TIME_START
@@ -299,6 +322,7 @@ TIME_END("relu41");
 
 convidx++;
 TIME_START;
+///40x30 c=64; 1x1, c=64, 64filters; finally gets 40x30 x64
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv42");
 TIME_START;
@@ -307,6 +331,7 @@ TIME_END("relu42");
 
 convidx++;
 TIME_START;
+///40x30 c=64; 3x3, c=64, 64filters; finally gets 40x30 x64
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv43");
 TIME_START;
@@ -314,12 +339,14 @@ TIME_START;
 TIME_END("relu43");
 
 TIME_START;
+///finally gets 20x15 x64
     maxpooling2x2S2(pConvDataBlobs+convidx, &pool4);
 TIME_END("pool4");
 
 /***************CONV5*********************/
     convidx++;
 TIME_START;
+///20x15 c=64; 3x3, c=64, 128filters; finally gets 20x15 x128
     convolution(&pool4, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv51");
 TIME_START;
@@ -328,6 +355,7 @@ TIME_END("relu51");
 
 convidx++;
 TIME_START;
+///20x15 c=128; 1x1, c=128, 128filters; finally gets 20x15 x128
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv52");
 TIME_START
@@ -336,6 +364,7 @@ TIME_END("relu52");
 
 convidx++;
 TIME_START;
+///20x15 c=128; 3x3, c=128, 128filters; finally gets 20x15 x128
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv53");
 TIME_START;
@@ -343,12 +372,14 @@ TIME_START;
 TIME_END("relu53");
 
 TIME_START;
+///finally gets 10x7 x128
     maxpooling2x2S2(pConvDataBlobs+convidx, &pool5);
 TIME_END("pool5");
 
 /***************CONV6*********************/
     convidx++;
 TIME_START;
+///10x7 c=128; 3x3, c=128, 128filters; finally gets 10x7 x128
     convolution(&pool5, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv61");
 TIME_START;
@@ -357,6 +388,7 @@ TIME_END("relu61");
 
 convidx++;
 TIME_START;
+///10x7 c=128; 1x1, c=128, 128filters; finally gets 10x7 x128
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv62");
 TIME_START
@@ -365,6 +397,7 @@ TIME_END("relu62");
 
 convidx++;
 TIME_START;
+///10x7 c=128; 3x3, c=128, 128filters; finally gets 10x7 x128
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv63");
 TIME_START;
@@ -374,58 +407,71 @@ TIME_END("relu63");
     /***************PRIORBOX3*********************/
     int conv3idx = 6;
     TIME_START;
+    ///it is using the history output(filter6's out)
+    ///the out still stored in pConvDataBlobs+conv3idx, param_pConv3Norm is the scale factor
     normalize(pConvDataBlobs+ conv3idx, param_pConv3Norm);
     TIME_END("norm3");
 
     convidx++;
     TIME_START
+    ///use the normalized data as input
+    ///80x60 c=32; 3x3, c=32, 12filters; finally gets 80x60 x12
     convolution(pConvDataBlobs+ conv3idx, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("prior3 loc");
 
     convidx++;
     TIME_START;
+    ///80x60 c=32; 3x3, c=32, 6filters; finally gets 80x60 x6
     convolution(pConvDataBlobs+ conv3idx, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("prior3 conf");
 
     TIME_START;
     float pSizes3[3] = {10, 16, 24};
+    ///each feature points have its rect infos in different rect sizes
     priorbox(pConvDataBlobs+ conv3idx, &inputImage, 3, pSizes3, &conv3priorbox);
     TIME_END("prior3");
 
     /***************PRIORBOX4*********************/
     int conv4idx = 9;
     TIME_START;
+    ///it is using the history output(filter9's out)
     normalize(pConvDataBlobs + conv4idx, param_pConv4Norm);
     TIME_END("norm4");
 
     convidx++;
     TIME_START
+    ///40x30 c=64; 3x3, c=64, 8filters; finally gets 40x30 x8
         convolution(pConvDataBlobs + conv4idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior4 loc");
 
     convidx++;
     TIME_START;
+    ///40x30 c=64; 3x3, c=64, 4filters; finally gets 40x30 x4
     convolution(pConvDataBlobs + conv4idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior4 conf");
 
     TIME_START;
     float pSizes4[2] = { 32, 48};
+    ///each feature points have its rect infos in different rect sizes
     priorbox(pConvDataBlobs + conv4idx, &inputImage, 2, pSizes4, &conv4priorbox);
     TIME_END("prior4");
 
     /***************PRIORBOX5*********************/
     int conv5idx = 12;
     TIME_START;
+    ///it is using the history output(filter12's out)
     normalize(pConvDataBlobs + conv5idx, param_pConv5Norm);
     TIME_END("norm5");
 
     convidx++;
     TIME_START
+    ///20x15 c=128; 3x3, c=128, 8filters; finally gets 20x15 x8
         convolution(pConvDataBlobs + conv5idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior5 loc");
 
     convidx++;
     TIME_START;
+    ///20x15 c=128; 3x3, c=128, 4filters; finally gets 20x15 x4
     convolution(pConvDataBlobs + conv5idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior5 conf");
 
@@ -437,16 +483,19 @@ TIME_END("relu63");
     /***************PRIORBOX6*********************/
     int conv6idx = 15;
     TIME_START;
+    ///it is using the history output(filter15's out)
     normalize(pConvDataBlobs + conv6idx, param_pConv5Norm);
     TIME_END("norm6");
 
     convidx++;
     TIME_START
+    ///10x7 c=128; 3x3, c=128, 12filters; finally gets 10x7 x12
         convolution(pConvDataBlobs + conv6idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior6 loc");
 
     convidx++;
     TIME_START;
+    ///10x7 c=128; 3x3, c=128, 6filters; finally gets 10x7 x6
     convolution(pConvDataBlobs + conv6idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior6 conf");
 
@@ -458,6 +507,7 @@ TIME_END("relu63");
 
 
 TIME_START;
+    ///convert from mat to vector; the input can be different mat size, and different channels
     blob2vector(&conv3priorbox, &conv3priorbox_flat, true);
     blob2vector(pConvDataBlobs + 16, &conv3loc_flat, true);
     blob2vector(pConvDataBlobs + 17, &conv3conf_flat, true);
@@ -478,6 +528,7 @@ TIME_END("prior flat");
 
 
 TIME_START
+    ///different 1-dimension vectors are concated
     concat4(&conv3priorbox_flat, &conv4priorbox_flat, &conv5priorbox_flat, &conv6priorbox_flat, &mbox_priorbox);
     concat4(&conv3loc_flat, &conv4loc_flat, &conv5loc_flat, &conv6loc_flat, &mbox_loc);
     concat4(&conv3conf_flat, &conv4conf_flat, &conv5conf_flat, &conv6conf_flat, &mbox_conf);
@@ -511,6 +562,7 @@ TIME_END("softmax")
         //r.w = int((bbxmax - bbxmin) * width + 0.5f);
         //r.h = int((bbymax - bbymin) * height + 0.5f);
 
+        ///use square to denote the face
         r.w = int( ((bbxmax - bbxmin) * width + (bbymax - bbymin) * height + 1) / 2);
         r.h = r.w;
         r.x = int(((bbxmin + bbxmax) * width - r.w + 0.5f) / 2);
@@ -524,6 +576,8 @@ TIME_END("softmax")
 
     return faces;
 }
+
+
 int * facedetect_cnn(unsigned char * result_buffer, //buffer memory for storing face detection results, !!its size must be 0x20000 Bytes!!
     unsigned char * rgb_image_data, int width, int height, int step) //input image, it must be RGB (three-channel) image!
 {
@@ -551,11 +605,13 @@ int * facedetect_cnn(unsigned char * result_buffer, //buffer memory for storing 
     int num_faces =(int)faces.size();
     num_faces = MIN(num_faces, 256);
 
+    ///the first 4 bytes is considered as int and to store the num_faces
     int * pCount = (int *)result_buffer;
     pCount[0] = num_faces;
 
     for (int i = 0; i < num_faces; i++)
     {
+        ///after the first 4 bytes, each face info occupys 142 bytes even though only 10bytes used each
         short * p = ((short*)(result_buffer + 4)) + 142 * i;
         p[0] = (short)faces[i].x;
         p[1] = (short)faces[i].y;

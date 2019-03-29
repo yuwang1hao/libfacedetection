@@ -302,6 +302,8 @@ public:
         }
         return true;
     }
+
+    ///3x3S2P1 means "3x3 as a sample", "sample rate is high and to be divied by 2"
     bool setDataFrom3x3S2P1to1x1S1P0FromImage(const unsigned char * imgData, int imgWidth, int imgHeight, int imgChannels, int imgWidthStep,
         int * pChannelMean)
     {
@@ -321,6 +323,8 @@ public:
             return false;
         }
 
+        ///the func caller's calling, namely inputImage
+        ///mainly create data_float and data_int8
         create((imgWidth+1)/2, (imgHeight+1)/2, 27);
         //since the pixel assignment cannot fill all the elements in the blob. 
         //some elements in the blob should be initialized to 0
@@ -333,6 +337,7 @@ public:
         {
             for (int c = 0; c < this->width; c++)
             {
+                ///pData points to the dst
                 float * pData = this->data_float + (r * this->width + c) * this->floatChannelStepInByte / sizeof(float);
                 for (int fy = -1; fy <= 1; fy++)
                 {
@@ -347,15 +352,16 @@ public:
 
                         if (srcx < 0 || srcx >= imgWidth) //out of the range of the image
                             continue;
-
+                        ///srcy srcx are one the base of 2*r 2*c
                         const unsigned char * pImgData = imgData + imgWidthStep * srcy + imgChannels * srcx;
 
+                        ///totally 3*3*3=27, and will fill the 32 allocated space
                         int output_channel_offset = ((fy + 1) * 3 + fx + 1) * 3; //3x3 filters, 3-channel image
 
+                        ///there are 3-channels float value in each offset
                         pData[output_channel_offset] = (float)(pImgData[0] - pChannelMean[0]);
                         pData[output_channel_offset+1] = (float)(pImgData[1] - pChannelMean[1]);
                         pData[output_channel_offset+2] = (float)(pImgData[2] - pChannelMean[2]);
-
                     }
 
                 }

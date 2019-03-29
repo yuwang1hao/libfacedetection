@@ -253,6 +253,7 @@ bool convolutionFloat1x1P0S1(const CDataBlob *inputData, const Filters* filters,
             float * pIn = (inputData->data_float + (row*inputData->width + col)*inputData->floatChannelStepInByte / sizeof(float));
             for (int ch = 0; ch < outputData->channels; ch++)
             {
+                ///get the coeff
                 float * pF = (float*)(filters->filters[ch]->data_float);
                 pOut[ch] = dotProductFloatChGeneral(pIn, pF, inputData->channels, inputData->floatChannelStepInByte);
             }
@@ -307,6 +308,7 @@ bool convolutionFloat3x3P1ChGeneral(const CDataBlob *inputData, const Filters* f
             {
                 int srcy = src_centery - 1;
 
+                ///if srcy is -1, pIn points to wild, but it will not be used this time
                 float * pIn = (inputData->data_float + (srcy *inputData->width + srcx_start)*elementStepInFloat);
                 float * pF = (filters->filters[ch]->data_float) + (srcx_start - col*stride + 1) * elementStepInFloat;
                 float * pOut = (outputData->data_float + (row*outputData->width + col)*outputData->floatChannelStepInByte / sizeof(float));
@@ -315,6 +317,7 @@ bool convolutionFloat3x3P1ChGeneral(const CDataBlob *inputData, const Filters* f
                 {
                     if (srcy >= 0)
                     {
+                        ///1st row's num_pixels_infloat
                         pOut[ch] += dotProductFloatChGeneral(pIn,
                             pF,
                             num_pixels_infloat,
@@ -324,9 +327,10 @@ bool convolutionFloat3x3P1ChGeneral(const CDataBlob *inputData, const Filters* f
                 {
                     srcy++;
                     {
+                        ///2nd row's num_pixels_infloat
                         pIn += (inputData->width * elementStepInFloat);
                         pOut[ch] += dotProductFloatChGeneral(pIn,
-                            pF + ( 3 * elementStepInFloat),
+                            pF + ( 3 * elementStepInFloat), ///3 indicates the 3 coeffs in first row of 3x3 filter
                             num_pixels_infloat,
                             num_pixels_infloat * sizeof(float));
                     }
@@ -335,6 +339,7 @@ bool convolutionFloat3x3P1ChGeneral(const CDataBlob *inputData, const Filters* f
                     srcy++;
                     if (srcy < inputData->height)
                     {
+                        ///3rd row's num_pixels_infloat
                         pIn += (inputData->width * elementStepInFloat);
                         pOut[ch] += dotProductFloatChGeneral(pIn,
                             pF + ( 6 * elementStepInFloat ),
@@ -561,6 +566,7 @@ bool convolution(CDataBlob *inputData, const Filters* filters, CDataBlob *output
 
     int outputW = 0;
     int outputH = 0;
+    ///how many filters; or how many outputs (it is not just a number)
     int outputC = (int)filters->filters.size();
 
     for (int i = 1; i < outputC; i++)
@@ -628,6 +634,7 @@ bool convolution(CDataBlob *inputData, const Filters* filters, CDataBlob *output
         return false;
     }
 
+    ///allocate the space for output
     outputData->create(outputW, outputH, outputC);
 
     /*
@@ -659,6 +666,7 @@ bool convolution(CDataBlob *inputData, const Filters* filters, CDataBlob *output
 #if defined(_ENABLE_INT8_CONV)
         convolutionInt81x1P0S1(inputData, filters, outputData);
 #else
+        ///actually exe convolution
         convolutionFloat1x1P0S1(inputData, filters, outputData);
 #endif
     }
@@ -716,6 +724,7 @@ bool maxpooling2x2S2(const CDataBlob *inputData, CDataBlob *outputData)
             for (int fy = hstart; fy < hend; fy++)
                 for (int fx = wstart; fx < wend; fx++)
                 {
+                    ///arrange the four nearby elems to array
                     inputMatOffsetsInElement[elementCount++] = (fy *inputData->width + fx) * inputData->floatChannelStepInByte / sizeof(float);
                 }
 
@@ -908,6 +917,7 @@ bool relu(const CDataBlob *inputOutputData)
 #pragma omp simd
 #endif
             for (int ch = 0; ch < inputOutputData->channels; ch++)
+                ///pData[ch] cannot less than 0
                 pData[ch] = MAX(pData[ch], 0);
 #endif
         }
@@ -925,16 +935,19 @@ bool priorbox(const CDataBlob * featureData, const CDataBlob * imageData, int nu
         return false;
     }
 
+    ///size of feature mat and ori_input_image
     int feature_width = featureData->width;
     int feature_height = featureData->height;
     int image_width = imageData->width * 2;
     int image_height = imageData->height * 2;
 
+    ///the times
 	float step_w = static_cast<float>(image_width) / feature_width;
 	float step_h = static_cast<float>(image_height) / feature_height;
 
 	float * output_data = outputData->data_float;
 
+    ///num_sizes is fixed at 3, maybe 3 channels
 //    outputData->create(feature_width, feature_height, num_sizes * 4 * 2);
     outputData->create(feature_width, feature_height, num_sizes * 4);
 
@@ -942,6 +955,7 @@ bool priorbox(const CDataBlob * featureData, const CDataBlob * imageData, int nu
 	{
 		for (int w = 0; w < feature_width; ++w) 
 		{
+            ///the space may give me 16, and only use num_sizes*4=12
             float * pOut = (float*)(outputData->data_float + ( h * outputData->width + w) * outputData->floatChannelStepInByte / sizeof(float));
             int idx = 0;
             //priorbox
@@ -951,8 +965,11 @@ bool priorbox(const CDataBlob * featureData, const CDataBlob * imageData, int nu
                 float box_width, box_height;
                 box_width = box_height = min_size_;
                 
+                ///step_w and step_h are the times of "origin to feature"
                 float center_x = w * step_w + step_w / 2.0f;
                 float center_y = h * step_h + step_h / 2.0f;
+                
+                ///each feature point has its rect infos in different rect sizes
                 // xmin
                 pOut[idx++] = (center_x - box_width / 2.f) / image_width;
                 // ymin
@@ -1072,11 +1089,13 @@ bool softmax1vector2class(const CDataBlob *inputOutputData)
     }
 
     int num = inputOutputData->channels;
+
     float * pData = (inputOutputData->data_float);
 
 #if defined(_OPENMP)
 #pragma omp parallel for
 #endif
+    ///adjust the pData
     for(int i = 0; i < num; i+= 2)
     {
         float v1 = pData[i];
@@ -1101,6 +1120,7 @@ bool blob2vector(const CDataBlob * inputData, CDataBlob * outputData, bool isFlo
         return false;
     }
 
+    ///to convert the mat to vector, the input is w*h*c
     outputData->create(1, 1, inputData->width * inputData->height * inputData->channels);
 
     if (isFloat)
@@ -1183,7 +1203,7 @@ bool SortScoreBBoxPairDescend(const pair<float, NormalizedBBox>& pair1,   const 
     return pair1.first > pair2.first;
 }
 
-
+///several params: 0.3, 0.5, 100, 50
 bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const CDataBlob * conf, float overlap_threshold, float confidence_threshold, int top_k, int keep_top_k, CDataBlob * outputData)
 {
     if (priorbox->data_float == NULL || loc->data_float == NULL || conf->data_float == NULL)
@@ -1209,6 +1229,7 @@ bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const C
     //get the candidates those are > confidence_threshold
     for(int i = 1; i < conf->channels; i+=2)
     {
+        ///pConf's num is 1/2 of pLoc
         if(pConf[i] > confidence_threshold)
         {
             float fx1 = pPriorBox[i*2-2];
@@ -1226,11 +1247,13 @@ bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const C
             float prior_center_x = (fx1 + fx2)/2;
             float prior_center_y = (fy1 + fy2)/2;
 
+            ///maybe get the real box infos from func(prior)
             float box_centerx = prior_variance[0] * locx1 * prior_width + prior_center_x;
             float box_centery = prior_variance[1] * locy1 * prior_height + prior_center_y;
             float box_width = expf(prior_variance[2] * locx2) * prior_width;
             float box_height = expf(prior_variance[3] * locy2) * prior_height;
 
+            ///box center and box size
             fx1 = box_centerx - box_width / 2.f;
             fy1 = box_centery - box_height /2.f;
             fx2 = box_centerx + box_width / 2.f;
@@ -1252,6 +1275,7 @@ bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const C
     }
 
     //Sort the score pair according to the scores in descending order
+    ///the confidence is the score
     std::stable_sort(score_bbox_vec.begin(), score_bbox_vec.end(), SortScoreBBoxPairDescend);
 
     // Keep top_k scores if needed.
@@ -1266,6 +1290,7 @@ bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const C
         bool keep = true;
         for (int k = 0; k < final_score_bbox_vec.size(); ++k)
         {
+            ///scan those in final_score_bbox_vec; if one is overlaped with the front in score_bbox_vec, directly erase the front in score_bbox_vec
             if (keep) 
             {
                 const NormalizedBBox bb2 = final_score_bbox_vec[k].second;
@@ -1277,6 +1302,7 @@ bool detection_output(const CDataBlob * priorbox, const CDataBlob * loc, const C
                 break;
             }
         }
+        ///the first face will be definitely kept
         if (keep) {
             final_score_bbox_vec.push_back(score_bbox_vec.front());
         }

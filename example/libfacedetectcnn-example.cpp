@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
 	//////////////////////////////////////////
 	//!!! The input image must be a RGB one (three-channel)
 	//!!! DO NOT RELEASE pResults !!!
+	///image.ptr(0) is the first row's start, which includes rgb; similarly image.ptr(1) is the next row
 	pResults = facedetect_cnn(pBuffer, (unsigned char*)(image.ptr(0)), image.cols, image.rows, (int)image.step);
 
     printf("%d faces detected.\n", (pResults ? *pResults : 0));
@@ -95,9 +96,10 @@ int main(int argc, char* argv[])
 		printf("face_rect=[%d, %d, %d, %d], neighbors=%d, angle=%d\n", x,y,w,h,neighbors, angle);
 		rectangle(result_cnn, Rect(x, y, w, h), Scalar(0, 255, 0), 2);
 	}
-	imshow("result_cnn", result_cnn);
+	///imshow("result_cnn", result_cnn);
+	imwrite("result_cnn.jpg", result_cnn);
 
-	waitKey();
+	///waitKey();
 
     //release the buffer
     free(pBuffer);
